@@ -1,3 +1,4 @@
+```html
 <!-- ============= MBS · SaaS Médico Premium (Resumen + Pagos Nutri + Pagos Logopedas + Charts) ============= -->
 <style>
 :root{
@@ -12828,3 +12829,4 @@ toggleCfg.addEventListener('click', ()=>{
     </div>
   </div>
 </div>
+```
