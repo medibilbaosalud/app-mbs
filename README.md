@@ -1,3 +1,4 @@
+```html
 <!-- ============= MBS · SaaS Médico Premium (Resumen + Pagos Nutri + Pagos Logopedas + Charts) ============= -->
 <style>
 :root{
@@ -9247,7 +9248,7 @@ resultsBody.addEventListener('input', (e)=>{
   </div>
 
   <div class="mbs-suite-panel" data-panel="variables" id="panel-variables" role="tabpanel" aria-labelledby="tab-variables" aria-hidden="true">
-<!-- ============= MBS · Variables Logopedia & Psicología ============= --><style>
+<!-- ============= MBS · Pagos profesionales (Logopedia & Psicología) ============= --><style>
   /* ========== Design tokens (namespaced) ========== */
   .mbs-variables-widget{
   --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -9857,8 +9858,8 @@ resultsBody.addEventListener('input', (e)=>{
     </div>
     <div class="mbs-widget-title">
       <span class="mbs-widget-eyebrow">Suite MBS</span>
-      <h3>Recursos Humanos</h3>
-      <p class="mbs-widget-subtitle">Simulador integral de nómina y cobros profesionales.</p>
+      <h3>Pagos de profesionales</h3>
+      <p class="mbs-widget-subtitle">Simulador integral de nómina y pagos para el equipo fijo y colaboradoras.</p>
     </div>
   </header>
 
@@ -9974,38 +9975,6 @@ resultsBody.addEventListener('input', (e)=>{
   </div>
   <!-- ===== fin panel ===== -->
 
-  <div class="mbs-tablewrap">
-    <table class="mbs-table">
-      <thead>
-        <tr>
-          <th>Profesional</th>
-          <th style="text-align:right">Capacidad (huecos)</th>
-          <th style="text-align:right">Citas totales</th>
-          <th style="text-align:right">Ocupación (%)</th>
-          <th style="text-align:right">% Sucesivas</th>
-          <th style="text-align:right">Sucesivas IMQ (uds)</th>
-          <th style="text-align:right">Fact. Sucesivas (€)</th>
-          <th style="text-align:right">% Variable</th>
-          <th style="text-align:right">Variable (€)</th>
-        </tr>
-      </thead>
-      <tbody data-ref="tbody"></tbody>
-      <tfoot>
-        <tr>
-          <td style="font-weight:700">TOTAL</td>
-          <td data-ref="tCap"   style="text-align:right;font-weight:700">0</td>
-          <td data-ref="tCit"   style="text-align:right;font-weight:700">0</td>
-          <td data-ref="tOcc"   style="text-align:right;font-weight:700">0,00</td>
-          <td data-ref="tPctS"  style="text-align:right;font-weight:700">0,00</td>
-          <td data-ref="tIMQ"   style="text-align:right;font-weight:700">0</td>
-          <td data-ref="tSucE"  style="text-align:right;font-weight:700">0,00</td>
-          <td style="text-align:right;font-weight:700">—</td>
-          <td data-ref="tVarE"  style="text-align:right;font-weight:700">0,00</td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
   <div class="mbs-chartgrid" style="margin-top:1.1rem">
     <div class="mbs-chartwrap">
       <div class="mbs-charthead">
@@ -10052,6 +10021,38 @@ resultsBody.addEventListener('input', (e)=>{
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="mbs-tablewrap">
+    <table class="mbs-table">
+      <thead>
+        <tr>
+          <th>Profesional</th>
+          <th style="text-align:right">Capacidad (huecos)</th>
+          <th style="text-align:right">Citas totales</th>
+          <th style="text-align:right">Ocupación (%)</th>
+          <th style="text-align:right">% Sucesivas</th>
+          <th style="text-align:right">Sucesivas IMQ (uds)</th>
+          <th style="text-align:right">Fact. Sucesivas (€)</th>
+          <th style="text-align:right">% Variable</th>
+          <th style="text-align:right">Variable (€)</th>
+        </tr>
+      </thead>
+      <tbody data-ref="tbody"></tbody>
+      <tfoot>
+        <tr>
+          <td style="font-weight:700">TOTAL</td>
+          <td data-ref="tCap"   style="text-align:right;font-weight:700">0</td>
+          <td data-ref="tCit"   style="text-align:right;font-weight:700">0</td>
+          <td data-ref="tOcc"   style="text-align:right;font-weight:700">0,00</td>
+          <td data-ref="tPctS"  style="text-align:right;font-weight:700">0,00</td>
+          <td data-ref="tIMQ"   style="text-align:right;font-weight:700">0</td>
+          <td data-ref="tSucE"  style="text-align:right;font-weight:700">0,00</td>
+          <td style="text-align:right;font-weight:700">—</td>
+          <td data-ref="tVarE"  style="text-align:right;font-weight:700">0,00</td>
+        </tr>
+      </tfoot>
+    </table>
   </div>
 
   <!-- ====== Nómina mensual (Hugo + June) ====== -->
@@ -12828,3 +12829,4 @@ toggleCfg.addEventListener('click', ()=>{
     </div>
   </div>
 </div>
+```
