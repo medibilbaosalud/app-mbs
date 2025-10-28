@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vista financiera</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="top-bar">
+      <div class="branding">
+        <h1>Vista financiera</h1>
+        <p class="subtitle">
+          Seguimiento consolidado de la caja y pagos a profesionales
+        </p>
+      </div>
+      <div class="filters">
+        <label for="date-range">Rango:</label>
+        <select id="date-range">
+          <option value="last-30">Últimos 30 días</option>
+          <option value="last-quarter">Último trimestre</option>
+          <option value="year">Año actual</option>
+        </select>
+      </div>
+    </header>
+
+    <main>
+      <section class="financial-overview">
+        <div class="summary-cards">
+          <article class="summary-card">
+            <span class="label">Ingresos</span>
+            <span class="value" id="summary-revenue">€0</span>
+            <span class="trend positive">+5.3% vs. mes anterior</span>
+          </article>
+          <article class="summary-card">
+            <span class="label">Pagos a profesionales</span>
+            <span class="value" id="summary-payments">€0</span>
+            <span class="trend negative">-2.1% vs. mes anterior</span>
+          </article>
+          <article class="summary-card">
+            <span class="label">Margen neto</span>
+            <span class="value" id="summary-margin">€0</span>
+            <span class="trend neutral">= estable</span>
+          </article>
+        </div>
+
+        <div class="charts">
+          <article class="chart-card">
+            <div class="chart-header">
+              <h2>Evolución de ingresos</h2>
+              <span class="chart-subtitle">Ingresos diarios</span>
+            </div>
+            <canvas id="revenueChart" aria-label="Evolución de ingresos" role="img"></canvas>
+          </article>
+          <article class="chart-card">
+            <div class="chart-header">
+              <h2>Pagos de profesionales</h2>
+              <span class="chart-subtitle">Distribución mensual</span>
+            </div>
+            <canvas
+              id="paymentsChart"
+              aria-label="Pagos de profesionales"
+              role="img"
+            ></canvas>
+          </article>
+          <article class="chart-card">
+            <div class="chart-header">
+              <h2>Balance de caja</h2>
+              <span class="chart-subtitle">Flujo de caja acumulado</span>
+            </div>
+            <canvas id="cashflowChart" aria-label="Balance de caja" role="img"></canvas>
+          </article>
+        </div>
+      </section>
+
+      <section class="tables">
+        <header class="tables-header">
+          <h2>Pagos de profesionales</h2>
+          <p>
+            Sección consolidada con pagos a los equipos de Nutrición, Logopedia,
+            Nkane y el resto de profesionales.
+          </p>
+        </header>
+
+        <div class="table-grid" id="professionalTables"></div>
+      </section>
+    </main>
+  </body>
+</html>
