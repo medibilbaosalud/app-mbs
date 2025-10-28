@@ -1351,8 +1351,8 @@ body{
     </div>
   </header>
   <div class="mbs-suite-nav" role="tablist" aria-label="Herramientas MBS">
-    <button type="button" class="mbs-suite-tab is-active" data-suite-tab="resumen" id="tab-resumen" role="tab" aria-selected="true" aria-controls="panel-resumen">Caja & Pagos</button>
-    <button type="button" class="mbs-suite-tab" data-suite-tab="variables" id="tab-variables" role="tab" aria-selected="false" aria-controls="panel-variables">Variables profesionales</button>
+    <button type="button" class="mbs-suite-tab is-active" data-suite-tab="resumen" id="tab-resumen" role="tab" aria-selected="true" aria-controls="panel-resumen">Vista financiera</button>
+    <button type="button" class="mbs-suite-tab" data-suite-tab="variables" id="tab-variables" role="tab" aria-selected="false" aria-controls="panel-variables">Pagos profesionales</button>
     <button type="button" class="mbs-suite-tab" data-suite-tab="evolucion" id="tab-evolucion" role="tab" aria-selected="false" aria-controls="panel-evolucion">Evolución del centro</button>
     <button type="button" class="mbs-suite-tab" data-suite-tab="ocupacion" id="tab-ocupacion" role="tab" aria-selected="false" aria-controls="panel-ocupacion">Ocupación salas</button>
   </div>
@@ -1417,13 +1417,13 @@ body{
       <rect x="3" y="5" width="14" height="14" rx="3"></rect>
       <path d="M7 9h6M7 13h4"></path>
     </svg>
-    Resumen de facturación por especialista (Clinic Cloud Caja)
+    Vista financiera por especialista (Clinic Cloud Caja)
   </h3>
 
   <div class="mbs-toolbar">
     <div>
-      <label style="font-weight:900">CSV de Caja</label><br>
-      <input type="file" accept=".csv,text/csv" data-ref="csvFile" class="mbs-input" aria-label="Subir CSV de caja">
+      <label style="font-weight:900">CSV vista financiera</label><br>
+      <input type="file" accept=".csv,text/csv" data-ref="csvFile" class="mbs-input" aria-label="Subir CSV vista financiera">
       <div class="mbs-help">Cabeceras: <code>Fecha; Tipo; Forma; Nº Fac.; Nº Rec.; Agenda; Detalles; Importe</code></div>
     </div>
 
@@ -1456,243 +1456,10 @@ body{
   <div class="mbs-kpi"><div class="k-label">Ticket medio por especialista</div><div class="k-value" data-ref="kpiAvg">0,00 €</div></div>
 </div>
 
-<div class="mbs-kpis">
+  <div class="mbs-kpis">
   <div class="mbs-kpi"><div class="k-label">Facturación Seguros</div><div class="k-value" data-ref="kpiSeguros">0,00 €</div></div>
   <div class="mbs-kpi"><div class="k-label">Facturación Privados</div><div class="k-value" data-ref="kpiPrivados">0,00 €</div></div>
 </div>
-
-  <div class="mbs-tablewrap">
-    <table class="mbs-table" aria-label="Resumen por especialista">
-      <thead>
-        <tr>
-          <th>Especialista</th>
-          <th>Primeras (€)</th>
-          <th>Sucesivas (€)</th>
-          <th>Otros Conceptos (€)</th>
-          <th>Seguros (€)</th>
-          <th>Facturado total (€)</th>
-        </tr>
-      </thead>
-      <tbody data-ref="resultsBody"></tbody>
-      <tfoot class="mbs-foot">
-        <tr>
-          <td>TOTAL</td>
-          <td data-ref="totPrim">0,00</td>
-          <td data-ref="totSuc">0,00</td>
-          <td data-ref="totOtros">0,00</td>
-          <td data-ref="totSeguros">0,00</td>
-          <td data-ref="totBruto">0,00</td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <div class="mbs-help" style="margin-top:.75rem">
-    Reglas extra:
-    <span class="mbs-chip">Nutrición + "entrevista" ⇒ Primera</span>
-    <span class="mbs-chip">Psicología "pareja": 35 € ⇒ Primera</span>
-    <span class="mbs-chip">60 € ⇒ Sucesiva</span>
-  </div>
-
-  <div style="margin-top:1.2rem">
-    <h4 class="mbs-h4" style="margin-top:0">Bonos facturados por especialista</h4>
-    <div class="mbs-tablewrap">
-      <table class="mbs-table" aria-label="Bonos facturados por especialista">
-        <thead>
-          <tr>
-            <th>Especialista</th>
-            <th>Especialidad</th>
-            <th>Bonos (uds)</th>
-            <th>Importe bonos (€)</th>
-          </tr>
-        </thead>
-        <tbody data-ref="bonosBody"></tbody>
-        <tfoot class="mbs-foot">
-          <tr>
-            <td>TOTAL</td>
-            <td>—</td>
-            <td data-ref="bonosTotCount">0</td>
-            <td data-ref="bonosTotImporte">0,00</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="mbs-help" style="margin-top:.5rem">
-      Solo se incluyen Nutrición, Logopedia y Psicología.
-    </div>
-  </div>
-    <!-- ================== Pagos Nutris ================== -->
-  <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
-    <h4 class="mbs-h4">Pagos Nutris (colaboradoras)</h4>
-
-    <div class="mbs-row" style="margin:.25rem 0 .7rem">
-      <div class="mbs-help">
-        Se calculan automáticamente para <b>María Pazos</b> y <b>Sheila</b>. Base = <i>Facturado total</i>.
-      </div>
-      <div>
-        <label style="font-weight:900">% Retención IRPF (global)</label><br>
-        <input type="number" step="1" min="0" max="100" value="15" data-ref="nutriRet" class="mbs-input" style="min-width:96px" aria-label="Retención IRPF Nutris">
-      </div>
-      <button data-ref="nutriCSV" class="mbs-btn" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Descargar CSV pagos
-      </button>
-      <button data-ref="nutriPDF" class="mbs-btn" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="16" y1="13" x2="15" y2="13"/></svg>
-        Descargar PDF pagos
-      </button>
-    </div>
-
-    <div class="mbs-tablewrap">
-      <table class="mbs-table" aria-label="Pagos Nutris">
-        <thead>
-          <tr>
-            <th>Nutri</th>
-            <th>Base reparto (€)</th>
-            <th>% Nutri</th>
-            <th>Bruto Nutri (€)</th>
-            <th>Retención (%)</th>
-            <th>Retención (€)</th>
-            <th>Pago neto (€)</th>
-            <th>% Centro</th>
-            <th>Para Centro (€)</th>
-          </tr>
-        </thead>
-        <tbody data-ref="nutriBody"></tbody>
-        <tfoot class="mbs-foot">
-          <tr>
-            <td>TOTAL</td>
-            <td data-ref="nutriTotBase">0,00</td>
-            <td>—</td>
-            <td data-ref="nutriTotGross">0,00</td>
-            <td>—</td>
-            <td data-ref="nutriTotRet">0,00</td>
-            <td data-ref="nutriTotNet">0,00</td>
-            <td>—</td>
-            <td data-ref="nutriTotCenter">0,00</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-
-    <div class="mbs-totals">
-      <b>Total a transferir a Nutris (neto): <span data-ref="nutriSumNet">0,00 €</span></b>
-      <span class="mbs-help">Retenciones a ingresar: <span data-ref="nutriSumRet">0,00 €</span></span>
-    </div>
-  </div>
-  <!-- ================ FIN Pagos Nutris ================ -->
-
-  <!-- ================== Pagos Logopedas (colaboradoras) ================== -->
-  <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
-    <h4 class="mbs-h4">Pagos Logopedas (colaboradoras)</h4>
-
-    <div class="mbs-row" style="margin:.25rem 0 .7rem">
-      <div class="mbs-help" style="flex:1;">
-        Se calculan automáticamente para <b>María Rico</b> y <b>Tamara Martín</b> (Hugo <u>no</u> entra). Base = <i>Facturado total</i>. <b>IRPF editable por persona</b>.
-      </div>
-      <div>
-        <label style="font-weight:900">% Retención IRPF (por defecto)</label><br>
-        <input type="number" step="1" min="0" max="100" value="15" data-ref="logoRet" class="mbs-input" style="min-width:96px" aria-label="Retención IRPF Logopedas por defecto">
-      </div>
-      <button data-ref="logoCSV" class="mbs-btn" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Descargar CSV pagos
-      </button>
-      <button data-ref="logoPDF" class="mbs-btn" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="16" y1="13" x2="15" y2="13"/></svg>
-        Descargar PDF pagos
-      </button>
-    </div>
-
-    <div class="mbs-tablewrap">
-      <table class="mbs-table" aria-label="Pagos Logopedas">
-        <thead>
-          <tr>
-            <th>Logopeda</th>
-            <th>Base reparto (€)</th>
-            <th>% Pro</th>
-            <th>Bruto Pro (€)</th>
-            <th>Retención (%)</th>
-            <th>Retención (€)</th>
-            <th>Pago neto (€)</th>
-            <th>% Centro</th>
-            <th>Para Centro (€)</th>
-          </tr>
-        </thead>
-        <tbody data-ref="logoBody"></tbody>
-        <tfoot class="mbs-foot">
-          <tr>
-            <td>TOTAL</td>
-            <td data-ref="logoTotBase">0,00</td>
-            <td>—</td>
-            <td data-ref="logoTotGross">0,00</td>
-            <td>—</td>
-            <td data-ref="logoTotRet">0,00</td>
-            <td data-ref="logoTotNet">0,00</td>
-            <td>—</td>
-            <td data-ref="logoTotCenter">0,00</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-
-    <div class="mbs-totals">
-      <b>Total a transferir a Logopedas (neto): <span data-ref="logoSumNet">0,00 €</span></b>
-      <span class="mbs-help">Retenciones a ingresar: <span data-ref="logoSumRet">0,00 €</span></span>
-    </div>
-  </div>
-  <!-- ============== FIN Pagos Logopedas (colaboradoras) ============== -->
-
-  <!-- ================== Pagos Nekane (colaboradora) ================== -->
-  <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
-    <h4 class="mbs-h4">Pagos Nekane (colaboradora)</h4>
-
-    <div class="mbs-help" style="margin:.25rem 0 .7rem">
-      Reparto <b>70/30</b> con deducción fija de <b>175 €</b> para el centro y retención IRPF del <b>15%</b> sobre la parte de
-      Nekane tras aplicar el fijo.
-    </div>
-
-    <div class="mbs-row" style="margin:.25rem 0 .7rem; justify-content:flex-end;">
-      <button data-ref="nekanePDF" class="mbs-btn" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="16" y1="13" x2="15" y2="13"/></svg>
-        Descargar PDF pagos
-      </button>
-    </div>
-
-    <div class="mbs-tablewrap">
-      <table class="mbs-table" aria-label="Pagos Nekane">
-        <thead>
-          <tr>
-            <th>Colaboradora</th>
-            <th>Facturado (€)</th>
-            <th>Parte 70% (€)</th>
-            <th>70% - Fijo (€)</th>
-            <th>Pago neto 15% (€)</th>
-            <th>% Centro</th>
-            <th>Para Centro (€)</th>
-          </tr>
-        </thead>
-        <tbody data-ref="nekaneBody"></tbody>
-        <tfoot class="mbs-foot">
-          <tr>
-            <td>TOTAL</td>
-            <td data-ref="nekaneTotBase">0,00</td>
-            <td data-ref="nekaneTotShare">0,00</td>
-            <td data-ref="nekaneTotAfter">0,00</td>
-            <td data-ref="nekaneTotNet">0,00</td>
-            <td>—</td>
-            <td data-ref="nekaneTotCenter">0,00</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-
-    <div class="mbs-totals">
-      <b>Total a transferir a Nekane (neto): <span data-ref="nekaneSumNet">0,00 €</span></b>
-      <span class="mbs-help">Retención 15% a ingresar: <span data-ref="nekaneSumRet">0,00 €</span></span>
-    </div>
-  </div>
-  <!-- ============== FIN Pagos Nekane (colaboradora) ============== -->
 
   <!-- ================== Charts ================== -->
   <div class="mbs-card mbs-card-rail" style="margin-top:1.2rem">
@@ -1885,6 +1652,66 @@ body{
   </div>
   <!-- ============== FIN Charts ============== -->
 
+  <div class="mbs-tablewrap">
+    <table class="mbs-table" aria-label="Resumen por especialista">
+      <thead>
+        <tr>
+          <th>Especialista</th>
+          <th>Primeras (€)</th>
+          <th>Sucesivas (€)</th>
+          <th>Otros Conceptos (€)</th>
+          <th>Seguros (€)</th>
+          <th>Facturado total (€)</th>
+        </tr>
+      </thead>
+      <tbody data-ref="resultsBody"></tbody>
+      <tfoot class="mbs-foot">
+        <tr>
+          <td>TOTAL</td>
+          <td data-ref="totPrim">0,00</td>
+          <td data-ref="totSuc">0,00</td>
+          <td data-ref="totOtros">0,00</td>
+          <td data-ref="totSeguros">0,00</td>
+          <td data-ref="totBruto">0,00</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="mbs-help" style="margin-top:.75rem">
+    Reglas extra:
+    <span class="mbs-chip">Nutrición + "entrevista" ⇒ Primera</span>
+    <span class="mbs-chip">Psicología "pareja": 35 € ⇒ Primera</span>
+    <span class="mbs-chip">60 € ⇒ Sucesiva</span>
+  </div>
+
+  <div style="margin-top:1.2rem">
+    <h4 class="mbs-h4" style="margin-top:0">Bonos facturados por especialista</h4>
+    <div class="mbs-tablewrap">
+      <table class="mbs-table" aria-label="Bonos facturados por especialista">
+        <thead>
+          <tr>
+            <th>Especialista</th>
+            <th>Especialidad</th>
+            <th>Bonos (uds)</th>
+            <th>Importe bonos (€)</th>
+          </tr>
+        </thead>
+        <tbody data-ref="bonosBody"></tbody>
+        <tfoot class="mbs-foot">
+          <tr>
+            <td>TOTAL</td>
+            <td>—</td>
+            <td data-ref="bonosTotCount">0</td>
+            <td data-ref="bonosTotImporte">0,00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="mbs-help" style="margin-top:.5rem">
+      Solo se incluyen Nutrición, Logopedia y Psicología.
+    </div>
+  </div>
   <!-- ================== Análisis de Rentabilidad ================== -->
   <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
     <h4 class="mbs-h4">Análisis de Rentabilidad</h4>
@@ -10402,6 +10229,179 @@ resultsBody.addEventListener('input', (e)=>{
     La variable aplica a <strong>Hugo Zichner (Logopeda)</strong> y <strong>June Amores (Psicóloga)</strong>. Ocupación según capacidad indicada arriba.<br>
     <span class="mbs-ok">Los datos NO salen de tu navegador.</span>
   </div>
+
+  <!-- ================== Pagos Nutris ================== -->
+  <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
+    <h4 class="mbs-h4">Pagos Nutris (colaboradoras)</h4>
+
+    <div class="mbs-row" style="margin:.25rem 0 .7rem">
+      <div class="mbs-help">
+        Se calculan automáticamente para <b>María Pazos</b> y <b>Sheila</b>. Base = <i>Facturado total</i>.
+      </div>
+      <div>
+        <label style="font-weight:900">% Retención IRPF (global)</label><br>
+        <input type="number" step="1" min="0" max="100" value="15" data-ref="nutriRet" class="mbs-input" style="min-width:96px" aria-label="Retención IRPF Nutris">
+      </div>
+      <button data-ref="nutriCSV" class="mbs-btn" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar CSV pagos
+      </button>
+      <button data-ref="nutriPDF" class="mbs-btn" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="16" y1="13" x2="15" y2="13"/></svg>
+        Descargar PDF pagos
+      </button>
+    </div>
+
+    <div class="mbs-tablewrap">
+      <table class="mbs-table" aria-label="Pagos Nutris">
+        <thead>
+          <tr>
+            <th>Nutri</th>
+            <th>Base reparto (€)</th>
+            <th>% Nutri</th>
+            <th>Bruto Nutri (€)</th>
+            <th>Retención (%)</th>
+            <th>Retención (€)</th>
+            <th>Pago neto (€)</th>
+            <th>% Centro</th>
+            <th>Para Centro (€)</th>
+          </tr>
+        </thead>
+        <tbody data-ref="nutriBody"></tbody>
+        <tfoot class="mbs-foot">
+          <tr>
+            <td>TOTAL</td>
+            <td data-ref="nutriTotBase">0,00</td>
+            <td>—</td>
+            <td data-ref="nutriTotGross">0,00</td>
+            <td>—</td>
+            <td data-ref="nutriTotRet">0,00</td>
+            <td data-ref="nutriTotNet">0,00</td>
+            <td>—</td>
+            <td data-ref="nutriTotCenter">0,00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="mbs-totals">
+      <b>Total a transferir a Nutris (neto): <span data-ref="nutriSumNet">0,00 €</span></b>
+      <span class="mbs-help">Retenciones a ingresar: <span data-ref="nutriSumRet">0,00 €</span></span>
+    </div>
+  </div>
+  <!-- ================ FIN Pagos Nutris ================ -->
+
+  <!-- ================== Pagos Logopedas (colaboradoras) ================== -->
+  <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
+    <h4 class="mbs-h4">Pagos Logopedas (colaboradoras)</h4>
+
+    <div class="mbs-row" style="margin:.25rem 0 .7rem">
+      <div class="mbs-help" style="flex:1;">
+        Se calculan automáticamente para <b>María Rico</b> y <b>Tamara Martín</b> (Hugo <u>no</u> entra). Base = <i>Facturado total</i>. <b>IRPF editable por persona</b>.
+      </div>
+      <div>
+        <label style="font-weight:900">% Retención IRPF (por defecto)</label><br>
+        <input type="number" step="1" min="0" max="100" value="15" data-ref="logoRet" class="mbs-input" style="min-width:96px" aria-label="Retención IRPF Logopedas por defecto">
+      </div>
+      <button data-ref="logoCSV" class="mbs-btn" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar CSV pagos
+      </button>
+      <button data-ref="logoPDF" class="mbs-btn" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="16" y1="13" x2="15" y2="13"/></svg>
+        Descargar PDF pagos
+      </button>
+    </div>
+
+    <div class="mbs-tablewrap">
+      <table class="mbs-table" aria-label="Pagos Logopedas">
+        <thead>
+          <tr>
+            <th>Logopeda</th>
+            <th>Base reparto (€)</th>
+            <th>% Pro</th>
+            <th>Bruto Pro (€)</th>
+            <th>Retención (%)</th>
+            <th>Retención (€)</th>
+            <th>Pago neto (€)</th>
+            <th>% Centro</th>
+            <th>Para Centro (€)</th>
+          </tr>
+        </thead>
+        <tbody data-ref="logoBody"></tbody>
+        <tfoot class="mbs-foot">
+          <tr>
+            <td>TOTAL</td>
+            <td data-ref="logoTotBase">0,00</td>
+            <td>—</td>
+            <td data-ref="logoTotGross">0,00</td>
+            <td>—</td>
+            <td data-ref="logoTotRet">0,00</td>
+            <td data-ref="logoTotNet">0,00</td>
+            <td>—</td>
+            <td data-ref="logoTotCenter">0,00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="mbs-totals">
+      <b>Total a transferir a Logopedas (neto): <span data-ref="logoSumNet">0,00 €</span></b>
+      <span class="mbs-help">Retenciones a ingresar: <span data-ref="logoSumRet">0,00 €</span></span>
+    </div>
+  </div>
+  <!-- ============== FIN Pagos Logopedas (colaboradoras) ============== -->
+
+  <!-- ================== Pagos Nekane (colaboradora) ================== -->
+  <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
+    <h4 class="mbs-h4">Pagos Nekane (colaboradora)</h4>
+
+    <div class="mbs-help" style="margin:.25rem 0 .7rem">
+      Reparto <b>70/30</b> con deducción fija de <b>175 €</b> para el centro y retención IRPF del <b>15%</b> sobre la parte de
+      Nekane tras aplicar el fijo.
+    </div>
+
+    <div class="mbs-row" style="margin:.25rem 0 .7rem; justify-content:flex-end;">
+      <button data-ref="nekanePDF" class="mbs-btn" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="16" y1="13" x2="15" y2="13"/></svg>
+        Descargar PDF pagos
+      </button>
+    </div>
+
+    <div class="mbs-tablewrap">
+      <table class="mbs-table" aria-label="Pagos Nekane">
+        <thead>
+          <tr>
+            <th>Colaboradora</th>
+            <th>Facturado (€)</th>
+            <th>Parte 70% (€)</th>
+            <th>70% - Fijo (€)</th>
+            <th>Pago neto 15% (€)</th>
+            <th>% Centro</th>
+            <th>Para Centro (€)</th>
+          </tr>
+        </thead>
+        <tbody data-ref="nekaneBody"></tbody>
+        <tfoot class="mbs-foot">
+          <tr>
+            <td>TOTAL</td>
+            <td data-ref="nekaneTotBase">0,00</td>
+            <td data-ref="nekaneTotShare">0,00</td>
+            <td data-ref="nekaneTotAfter">0,00</td>
+            <td data-ref="nekaneTotNet">0,00</td>
+            <td>—</td>
+            <td data-ref="nekaneTotCenter">0,00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="mbs-totals">
+      <b>Total a transferir a Nekane (neto): <span data-ref="nekaneSumNet">0,00 €</span></b>
+      <span class="mbs-help">Retención 15% a ingresar: <span data-ref="nekaneSumRet">0,00 €</span></span>
+    </div>
+  </div>
+  <!-- ============== FIN Pagos Nekane (colaboradora) ============== -->
 </div>
 <!-- CDNs (orden importante); el script trae fallback si tu tema difiere la carga -->
 <script data-no-defer data-cfasync="false" src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
