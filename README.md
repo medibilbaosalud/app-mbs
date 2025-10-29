@@ -2222,7 +2222,10 @@ body{
   let evolutionPanelInitialized = false;
 
   function initWidget(root){
-    const $ = (name)=>root.querySelector(`[data-ref="${name}"]`);
+    const $ = (name)=>{
+      if (!name) return null;
+      return root.querySelector(`[data-ref="${name}"]`) || document.querySelector(`[data-ref="${name}"]`);
+    };
 
     const glanceTargets = {
       liquidez: Array.from(document.querySelectorAll('[data-mbs-glance="liquidez"]')),
@@ -3670,6 +3673,9 @@ function renderBonosTable(){
     }
 
     function buildNutriPayouts(){
+      if (!nutriBody || !nutriTotBase || !nutriTotGross || !nutriTotRet || !nutriTotNet || !nutriTotCenter || !nutriSumNet || !nutriSumRet){
+        return;
+      }
       const {rows, totals} = computeNutriRows();
       nutriBody.innerHTML='';
 
@@ -3809,6 +3815,9 @@ function renderBonosTable(){
     }
 
     function buildLogoPayouts(){
+      if (!logoBody || !logoTotBase || !logoTotGross || !logoTotRet || !logoTotNet || !logoTotCenter || !logoSumNet || !logoSumRet){
+        return;
+      }
       const {rows, totals} = computeLogoRows();
       logoBody.innerHTML='';
 
@@ -9003,14 +9012,16 @@ function renderCalendarHeatmap(container, year, monthIndex, dailyValues, monthLa
     /* Nutri events */
     loadNutriCfg();
     nutriRet && nutriRet.addEventListener('input', ()=>{ saveNutriCfg(); buildNutriPayouts(); });
-    nutriBody.addEventListener('input', (e)=>{
-      const t=e.target;
-      if (t && t.matches('input[data-nutri]')){
-        const key=t.getAttribute('data-nutri');
-        const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
-        t.value = v; nutriPctMap[key]=v; saveNutriCfg(); buildNutriPayouts();
-      }
-    });
+    if (nutriBody){
+      nutriBody.addEventListener('input', (e)=>{
+        const t=e.target;
+        if (t && t.matches('input[data-nutri]')){
+          const key=t.getAttribute('data-nutri');
+          const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
+          t.value = v; nutriPctMap[key]=v; saveNutriCfg(); buildNutriPayouts();
+        }
+      });
+    }
     nutriCSV && nutriCSV.addEventListener('click', ()=>{
       if (nutriCSV.disabled) return;
       const {rows} = computeNutriRows();
@@ -9052,19 +9063,21 @@ function renderCalendarHeatmap(container, year, monthIndex, dailyValues, monthLa
     /* Logopedas events */
     loadLogoCfg();
     logoRet && logoRet.addEventListener('input', ()=>{ saveLogoCfg(); buildLogoPayouts(); });
-    logoBody.addEventListener('input', (e)=>{
-      const t=e.target;
-      if (!t) return;
-      if (t.matches('input[data-logo]')){
-        const key=t.getAttribute('data-logo');
-        const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
-        t.value = v; logoPctMap[key]=v; saveLogoCfg(); buildLogoPayouts();
-      } else if (t.matches('input[data-logo-ret]')){
-        const key=t.getAttribute('data-logo-ret');
-        const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
-        t.value = v; logoRetMap[key]=v; saveLogoCfg(); buildLogoPayouts();
-      }
-    });
+    if (logoBody){
+      logoBody.addEventListener('input', (e)=>{
+        const t=e.target;
+        if (!t) return;
+        if (t.matches('input[data-logo]')){
+          const key=t.getAttribute('data-logo');
+          const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
+          t.value = v; logoPctMap[key]=v; saveLogoCfg(); buildLogoPayouts();
+        } else if (t.matches('input[data-logo-ret]')){
+          const key=t.getAttribute('data-logo-ret');
+          const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
+          t.value = v; logoRetMap[key]=v; saveLogoCfg(); buildLogoPayouts();
+        }
+      });
+    }
     logoCSV && logoCSV.addEventListener('click', ()=>{
       if (logoCSV.disabled) return;
       const {rows} = computeLogoRows();
