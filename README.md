@@ -95,6 +95,49 @@ body{
 .mbs-suite-tab:active{
   transform:translateY(1px);
 }
+.mbs-finance-tabs{
+  display:flex;
+  gap:.5rem;
+  flex-wrap:wrap;
+  justify-content:flex-start;
+  margin:1.6rem 0 1.2rem;
+  padding:.55rem;
+  background:rgba(9,16,32,.36);
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.28);
+  box-shadow:0 18px 42px rgba(8,15,35,.35);
+  backdrop-filter:blur(16px) saturate(1.3);
+}
+.mbs-finance-tab{
+  appearance:none;
+  border:1px solid transparent;
+  background:rgba(148,163,184,.16);
+  color:#e2ebff;
+  padding:.55rem 1.2rem;
+  border-radius:999px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.72rem;
+  cursor:pointer;
+  transition:box-shadow .2s ease, transform .12s ease, border-color .2s ease, background .2s ease, color .2s ease;
+  box-shadow:0 1px 4px rgba(8,15,35,.28);
+}
+.mbs-finance-tab.is-active{
+  background:linear-gradient(135deg,var(--mbs-electric-blue) 0%,var(--mbs-electric-blue-dark) 100%);
+  border-color:rgba(var(--mbs-electric-blue-rgb),.35);
+  color:#fff;
+  box-shadow:0 16px 34px rgba(var(--mbs-electric-blue-rgb),.32);
+}
+.mbs-finance-tab:focus-visible{
+  outline:3px solid rgba(var(--mbs-electric-blue-rgb),.35);
+  outline-offset:2px;
+}
+.mbs-finance-tab:active{
+  transform:translateY(1px);
+}
+.mbs-finance-view{display:none;}
+.mbs-finance-view.is-active{display:block;animation:mbsFadeIn .32s ease both;}
 @media (max-width:640px){
   .mbs-suite{
     padding:2.4rem 1rem 2.6rem;
@@ -103,6 +146,11 @@ body{
     margin:1.6rem auto 1.8rem;
   }
   .mbs-suite-tab{width:100%; text-align:center;}
+  .mbs-finance-tabs{
+    justify-content:center;
+    padding:.5rem;
+  }
+  .mbs-finance-tab{flex:1 1 160px; text-align:center;}
 }
 
 .mbs-suite-header{
@@ -1448,283 +1496,418 @@ body{
     </button>
   </div>
 
-  <div data-ref="stats" class="mbs-help" style="margin:.2rem 0 .8rem"></div>
+  <div class="mbs-finance-tabs" role="tablist" aria-label="Subsecciones vista financiera">
+    <button type="button" class="mbs-finance-tab is-active" id="finance-tab-actuacion" data-finance-tab="actuacion" role="tab" aria-selected="true" aria-controls="finance-actuacion">Actuación</button>
+    <button type="button" class="mbs-finance-tab" id="finance-tab-gastos" data-finance-tab="gastos" role="tab" aria-selected="false" aria-controls="finance-gastos">Gastos</button>
+    <button type="button" class="mbs-finance-tab" id="finance-tab-beneficios" data-finance-tab="beneficios" role="tab" aria-selected="false" aria-controls="finance-beneficios">Beneficios</button>
+  </div>
 
-  <div class="mbs-kpis">
+  <div class="mbs-finance-view is-active" data-finance-panel="actuacion" id="finance-actuacion" role="tabpanel" aria-labelledby="finance-tab-actuacion" aria-hidden="false">
+    <div data-ref="stats" class="mbs-help" style="margin:.2rem 0 .8rem"></div>
+
+    <div class="mbs-kpis">
   <div class="mbs-kpi"><div class="k-label">Facturado total</div><div class="k-value" data-ref="kpiTotal">0,00 €</div></div>
   <div class="mbs-kpi"><div class="k-label">Especialistas</div><div class="k-value" data-ref="kpiCount">0</div></div>
   <div class="mbs-kpi"><div class="k-label">% Primeras</div><div class="k-value" data-ref="kpiPrimPct">0%</div></div>
   <div class="mbs-kpi"><div class="k-label">Ticket medio por especialista</div><div class="k-value" data-ref="kpiAvg">0,00 €</div></div>
 </div>
 
-  <div class="mbs-kpis">
+    <div class="mbs-kpis">
   <div class="mbs-kpi"><div class="k-label">Facturación Seguros</div><div class="k-value" data-ref="kpiSeguros">0,00 €</div></div>
   <div class="mbs-kpi"><div class="k-label">Facturación Privados</div><div class="k-value" data-ref="kpiPrivados">0,00 €</div></div>
 </div>
 
-  <!-- ================== Charts ================== -->
-  <div class="mbs-card mbs-card-rail" style="margin-top:1.2rem">
-    <h4 class="mbs-h4">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:20px;height:20px;margin-right:8px">
-        <path d="M3 3v18h18"/>
-        <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-      </svg>
-      Análisis de Facturación - Gráficos
-    </h4>
+    <!-- ================== Charts ================== -->
+    <div class="mbs-card mbs-card-rail" style="margin-top:1.2rem">
+      <h4 class="mbs-h4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:20px;height:20px;margin-right:8px">
+          <path d="M3 3v18h18"/>
+          <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+        </svg>
+        Análisis de Facturación - Gráficos
+      </h4>
 
-    <div class="mbs-chartgrid">
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Facturación por especialista</h5>
-            <span class="mbs-chartnote" data-chart-summary="spec"></span>
+      <div class="mbs-chartgrid">
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Facturación por especialista</h5>
+              <span class="mbs-chartnote" data-chart-summary="spec"></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones facturación por especialista">
+              <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="spec" data-mode="top">Top 8</button>
+              <button type="button" class="mbs-chartbtn" data-chart-toggle="spec" data-mode="all">Todo</button>
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartSpec" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
           </div>
-          <div class="mbs-chartactions" aria-label="Opciones facturación por especialista">
-            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="spec" data-mode="top">Top 8</button>
-            <button type="button" class="mbs-chartbtn" data-chart-toggle="spec" data-mode="all">Todo</button>
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartSpec" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
-          </div>
-        </div>
-        <div class="chart-area">
-          <canvas data-ref="chartSpec"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Mix por tipo (Primeras / Sucesivas / Bonos / Otros)</h5>
-            <span class="mbs-chartnote" data-chart-summary="mix"></span>
-          </div>
-          <div class="mbs-chartactions" aria-label="Opciones mix por tipo">
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartMix" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
+          <div class="chart-area">
+            <canvas data-ref="chartSpec"></canvas>
           </div>
         </div>
-        <div class="chart-area">
-          <canvas data-ref="chartMix"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Bonos por especialista</h5>
-            <span class="mbs-chartnote" data-chart-summary="bonos"></span>
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Mix por tipo (Primeras / Sucesivas / Bonos / Otros)</h5>
+              <span class="mbs-chartnote" data-chart-summary="mix"></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones mix por tipo">
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartMix" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
           </div>
-          <div class="mbs-chartactions" aria-label="Opciones bonos por especialista">
-            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="bonos" data-mode="top">Top 8</button>
-            <button type="button" class="mbs-chartbtn" data-chart-toggle="bonos" data-mode="all">Todo</button>
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartBonos" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
+          <div class="chart-area">
+            <canvas data-ref="chartMix"></canvas>
           </div>
         </div>
-        <div class="chart-area">
-          <canvas data-ref="chartBonos"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Facturación por especialidad</h5>
-            <span class="mbs-chartnote" data-chart-summary="esp"></span>
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Bonos por especialista</h5>
+              <span class="mbs-chartnote" data-chart-summary="bonos"></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones bonos por especialista">
+              <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="bonos" data-mode="top">Top 8</button>
+              <button type="button" class="mbs-chartbtn" data-chart-toggle="bonos" data-mode="all">Todo</button>
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartBonos" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
           </div>
-          <div class="mbs-chartactions" aria-label="Opciones facturación por especialidad">
-            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="esp" data-mode="top">Top 8</button>
-            <button type="button" class="mbs-chartbtn" data-chart-toggle="esp" data-mode="all">Todo</button>
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartEsp" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
-          </div>
-        </div>
-        <div class="chart-area">
-          <canvas data-ref="chartEsp"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Origen de facturación por especialista</h5>
-            <span class="mbs-chartnote" data-chart-summary="origen"></span>
-          </div>
-          <div class="mbs-chartactions" aria-label="Opciones origen de facturación por especialista">
-            <button type="button" class="mbs-chartbtn" data-chart-toggle="origen" data-mode="top">Top 8</button>
-            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="origen" data-mode="all">Todo</button>
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartOrigen" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
+          <div class="chart-area">
+            <canvas data-ref="chartBonos"></canvas>
           </div>
         </div>
-        <div class="chart-area chart-area--origen">
-          <canvas data-ref="chartOrigen"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Total por día</h5>
-            <span class="mbs-chartnote" data-chart-summary="dia"></span>
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Facturación por especialidad</h5>
+              <span class="mbs-chartnote" data-chart-summary="esp"></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones facturación por especialidad">
+              <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="esp" data-mode="top">Top 8</button>
+              <button type="button" class="mbs-chartbtn" data-chart-toggle="esp" data-mode="all">Todo</button>
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartEsp" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
           </div>
-          <div class="mbs-chartactions" aria-label="Opciones total por día">
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartDia" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
-          </div>
-        </div>
-        <div class="chart-area">
-          <canvas data-ref="chartDia"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Por forma de pago</h5>
-            <span class="mbs-chartnote" data-chart-summary="forma"></span>
-          </div>
-          <div class="mbs-chartactions" aria-label="Opciones por forma de pago">
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartForma" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
+          <div class="chart-area">
+            <canvas data-ref="chartEsp"></canvas>
           </div>
         </div>
-        <div class="chart-area">
-          <canvas data-ref="chartForma"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Run-rate del mes (acumulado)</h5>
-            <span class="mbs-chartnote"><span data-ref="runrateTitle" style="font-weight:600; font-size:.88em"></span></span>
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Origen de facturación por especialista</h5>
+              <span class="mbs-chartnote" data-chart-summary="origen"></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones origen de facturación por especialista">
+              <button type="button" class="mbs-chartbtn" data-chart-toggle="origen" data-mode="top">Top 8</button>
+              <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="origen" data-mode="all">Todo</button>
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartOrigen" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
           </div>
-          <div class="mbs-chartactions" aria-label="Opciones run-rate del mes">
-            <button type="button" class="mbs-chartbtn" data-chart-download="chartRun" data-variant="ghost">
-              <span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-                PNG
-              </span>
-            </button>
+          <div class="chart-area chart-area--origen">
+            <canvas data-ref="chartOrigen"></canvas>
           </div>
         </div>
-        <div class="chart-area">
-          <canvas data-ref="chartRun"></canvas>
-        </div>
-      </div>
-      <div class="mbs-chartwrap">
-        <div class="mbs-charthead">
-          <div class="mbs-charttitle">
-            <h5>Calendario de facturación</h5>
-            <span class="mbs-chartnote" data-chart-summary="calendar"></span>
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Total por día</h5>
+              <span class="mbs-chartnote" data-chart-summary="dia"></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones total por día">
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartDia" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
           </div>
-          <div class="mbs-chartactions" aria-hidden="true"></div>
+          <div class="chart-area">
+            <canvas data-ref="chartDia"></canvas>
+          </div>
         </div>
-        <div class="chart-area" style="height:auto; min-height:400px">
-          <div data-ref="calGrid" class="mbs-cal-wrapper"></div>
-          <div class="mbs-cal-legend">
-            <span style="width:16px;height:16px;border-radius:5px;background:#dbeafe;border:1px solid #c7d2fe"></span> Bajo
-            <span style="width:16px;height:16px;border-radius:5px;background:#60a5fa;margin-left:8px;border:1px solid #2563eb"></span> Alto
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Por forma de pago</h5>
+              <span class="mbs-chartnote" data-chart-summary="forma"></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones por forma de pago">
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartForma" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="chart-area">
+            <canvas data-ref="chartForma"></canvas>
+          </div>
+        </div>
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Run-rate del mes (acumulado)</h5>
+              <span class="mbs-chartnote"><span data-ref="runrateTitle" style="font-weight:600; font-size:.88em"></span></span>
+            </div>
+            <div class="mbs-chartactions" aria-label="Opciones run-rate del mes">
+              <button type="button" class="mbs-chartbtn" data-chart-download="chartRun" data-variant="ghost">
+                <span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                  PNG
+                </span>
+              </button>
+            </div>
+          </div>
+          <div class="chart-area">
+            <canvas data-ref="chartRun"></canvas>
+          </div>
+        </div>
+        <div class="mbs-chartwrap">
+          <div class="mbs-charthead">
+            <div class="mbs-charttitle">
+              <h5>Calendario de facturación</h5>
+              <span class="mbs-chartnote" data-chart-summary="calendar"></span>
+            </div>
+            <div class="mbs-chartactions" aria-hidden="true"></div>
+          </div>
+          <div class="chart-area" style="height:auto; min-height:400px">
+            <div data-ref="calGrid" class="mbs-cal-wrapper"></div>
+            <div class="mbs-cal-legend">
+              <span style="width:16px;height:16px;border-radius:5px;background:#dbeafe;border:1px solid #c7d2fe"></span> Bajo
+              <span style="width:16px;height:16px;border-radius:5px;background:#60a5fa;margin-left:8px;border:1px solid #2563eb"></span> Alto
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- ============== FIN Charts ============== -->
+    <!-- ============== FIN Charts ============== -->
 
-  <div class="mbs-tablewrap">
-    <table class="mbs-table" aria-label="Resumen por especialista">
-      <thead>
-        <tr>
-          <th>Especialista</th>
-          <th>Primeras (€)</th>
-          <th>Sucesivas (€)</th>
-          <th>Otros Conceptos (€)</th>
-          <th>Seguros (€)</th>
-          <th>Facturado total (€)</th>
-        </tr>
-      </thead>
-      <tbody data-ref="resultsBody"></tbody>
-      <tfoot class="mbs-foot">
-        <tr>
-          <td>TOTAL</td>
-          <td data-ref="totPrim">0,00</td>
-          <td data-ref="totSuc">0,00</td>
-          <td data-ref="totOtros">0,00</td>
-          <td data-ref="totSeguros">0,00</td>
-          <td data-ref="totBruto">0,00</td>
-        </tr>
-      </tfoot>
-    </table>
-  </div>
-
-  <div class="mbs-help" style="margin-top:.75rem">
-    Reglas extra:
-    <span class="mbs-chip">Nutrición + "entrevista" ⇒ Primera</span>
-    <span class="mbs-chip">Psicología "pareja": 35 € ⇒ Primera</span>
-    <span class="mbs-chip">60 € ⇒ Sucesiva</span>
-  </div>
-
-  <div style="margin-top:1.2rem">
-    <h4 class="mbs-h4" style="margin-top:0">Bonos facturados por especialista</h4>
     <div class="mbs-tablewrap">
-      <table class="mbs-table" aria-label="Bonos facturados por especialista">
+      <table class="mbs-table" aria-label="Resumen por especialista">
         <thead>
           <tr>
             <th>Especialista</th>
-            <th>Especialidad</th>
-            <th>Bonos (uds)</th>
-            <th>Importe bonos (€)</th>
+            <th>Primeras (€)</th>
+            <th>Sucesivas (€)</th>
+            <th>Otros Conceptos (€)</th>
+            <th>Seguros (€)</th>
+            <th>Facturado total (€)</th>
           </tr>
         </thead>
-        <tbody data-ref="bonosBody"></tbody>
+        <tbody data-ref="resultsBody"></tbody>
         <tfoot class="mbs-foot">
           <tr>
             <td>TOTAL</td>
-            <td>—</td>
-            <td data-ref="bonosTotCount">0</td>
-            <td data-ref="bonosTotImporte">0,00</td>
+            <td data-ref="totPrim">0,00</td>
+            <td data-ref="totSuc">0,00</td>
+            <td data-ref="totOtros">0,00</td>
+            <td data-ref="totSeguros">0,00</td>
+            <td data-ref="totBruto">0,00</td>
           </tr>
         </tfoot>
       </table>
     </div>
-    <div class="mbs-help" style="margin-top:.5rem">
-      Solo se incluyen Nutrición, Logopedia y Psicología.
+
+    <div class="mbs-help" style="margin-top:.75rem">
+      Reglas extra:
+      <span class="mbs-chip">Nutrición + "entrevista" ⇒ Primera</span>
+      <span class="mbs-chip">Psicología "pareja": 35 € ⇒ Primera</span>
+      <span class="mbs-chip">60 € ⇒ Sucesiva</span>
+    </div>
+
+    <div style="margin-top:1.2rem">
+      <h4 class="mbs-h4" style="margin-top:0">Bonos facturados por especialista</h4>
+      <div class="mbs-tablewrap">
+        <table class="mbs-table" aria-label="Bonos facturados por especialista">
+          <thead>
+            <tr>
+              <th>Especialista</th>
+              <th>Especialidad</th>
+              <th>Bonos (uds)</th>
+              <th>Importe bonos (€)</th>
+            </tr>
+          </thead>
+          <tbody data-ref="bonosBody"></tbody>
+          <tfoot class="mbs-foot">
+            <tr>
+              <td>TOTAL</td>
+              <td>—</td>
+              <td data-ref="bonosTotCount">0</td>
+              <td data-ref="bonosTotImporte">0,00</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="mbs-help" style="margin-top:.5rem">
+        Solo se incluyen Nutrición, Logopedia y Psicología.
+      </div>
     </div>
   </div>
-  <!-- ================== Análisis de Rentabilidad ================== -->
-  <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:1.2rem">
-    <h4 class="mbs-h4">Análisis de Rentabilidad</h4>
-    
-    <div class="mbs-kpis" style="margin-bottom:1rem">
-  <div class="mbs-kpi">
-    <div class="k-label">Facturado Total (€)</div>
-    <div class="k-value" data-ref="rentKpiTotal">0,00 €</div>
-  </div>
+
+  <div class="mbs-finance-view" data-finance-panel="gastos" id="finance-gastos" role="tabpanel" aria-labelledby="finance-tab-gastos" aria-hidden="true">
+    <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:0">
+      <h4 class="mbs-h4">Costes operativos</h4>
+
+      <div class="mbs-kpis" style="margin-bottom:1rem">
   <div class="mbs-kpi">
     <div class="k-label">Gastos Totales (€)</div>
     <div class="k-value" data-ref="rentKpiExpenses">0,00 €</div>
+  </div>
+  <div class="mbs-kpi">
+    <div class="k-label">Sueldos (€)</div>
+    <div class="k-value" data-ref="rentKpiSueldos">0,00 €</div>
+  </div>
+  <div class="mbs-kpi">
+    <div class="k-label">SEM (€)</div>
+    <div class="k-value" data-ref="rentKpiSem">0,00 €</div>
+  </div>
+  <div class="mbs-kpi">
+    <div class="k-label">Doctoralia (€)</div>
+    <div class="k-value" data-ref="rentKpiDoctoralia">-318,48 €</div>
+  </div>
+</div>
+
+<div class="mbs-kpis" style="margin-bottom:1rem">
+  <div class="mbs-kpi">
+    <div class="k-label">Top Doctors (€)</div>
+    <div class="k-value" data-ref="rentKpiTopD">-156,09 €</div>
+  </div>
+  <div class="mbs-kpi">
+    <div class="k-label">Recepción (€)</div>
+    <div class="k-value" data-ref="rentKpiRecepcion">-1.500,00 €</div>
+  </div>
+</div>
+
+      <div class="mbs-tablewrap">
+        <table class="mbs-table" aria-label="Análisis de rentabilidad por especialista">
+          <thead>
+            <tr>
+              <th>Especialista</th>
+              <th>Facturado (€)</th>
+              <th>Sueldos (€)</th>
+              <th>TopD Doct (€)</th>
+              <th>SEM (€)</th>
+              <th>Recepción (€)</th>
+              <th>Beneficio (€)</th>
+              <th>Margen (%)</th>
+            </tr>
+          </thead>
+          <tbody data-ref="rentBody"></tbody>
+          <tfoot class="mbs-foot">
+            <tr>
+              <td>TOTAL</td>
+              <td data-ref="rentTotFacturado">0,00</td>
+              <td data-ref="rentTotCostes">0,00</td>
+              <td data-ref="rentTotTopD">0,00</td>
+              <td data-ref="rentTotSem">0,00</td>
+              <td data-ref="rentTotRecepcion">0,00</td>
+              <td data-ref="rentTotBeneficio">0,00</td>
+              <td data-ref="rentTotMargen">0%</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Distribución de gastos</h5>
+            <span class="mbs-chartnote" data-chart-summary="gastos"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones distribución de gastos">
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartGastos" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="chart-area">
+          <canvas data-ref="chartGastos"></canvas>
+        </div>
+      </div>
+
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Gastos por especialista</h5>
+            <span class="mbs-chartnote" data-chart-summary="gastosEsp"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones gastos por especialista">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="gastosEsp" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="gastosEsp" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartGastosEspecialista" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="chart-area">
+          <canvas data-ref="chartGastosEspecialista"></canvas>
+        </div>
+      </div>
+
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Gastos por especialidad</h5>
+            <span class="mbs-chartnote" data-chart-summary="gastosEspecialidad"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones gastos por especialidad">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="gastosEspecialidad" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="gastosEspecialidad" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartGastosEspecialidad" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="chart-area">
+          <canvas data-ref="chartGastosEspecialidad"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mbs-finance-view" data-finance-panel="beneficios" id="finance-beneficios" role="tabpanel" aria-labelledby="finance-tab-beneficios" aria-hidden="true">
+    <div class="mbs-card mbs-card-rail pay-dark" style="margin-top:0">
+      <h4 class="mbs-h4">Beneficios y márgenes</h4>
+
+      <div class="mbs-kpis" style="margin-bottom:1rem">
+  <div class="mbs-kpi">
+    <div class="k-label">Facturado Total (€)</div>
+    <div class="k-value" data-ref="rentKpiTotal">0,00 €</div>
   </div>
   <div class="mbs-kpi">
     <div class="k-label">Beneficio Neto (€)</div>
@@ -1736,263 +1919,141 @@ body{
   </div>
 </div>
 
-<div class="mbs-kpis" style="margin-bottom:1rem">
-  <div class="mbs-kpi" style="cursor:pointer">
-    <div class="k-label">Sueldos (€)</div>
-    <div class="k-value" data-ref="rentKpiSueldos">0,00 €</div>
-  </div>
-  <div class="mbs-kpi" style="cursor:pointer">
-    <div class="k-label">SEM (€)</div>
-    <div class="k-value" data-ref="rentKpiSem">0,00 €</div>
-  </div>
-  <div class="mbs-kpi" style="cursor:pointer">
-    <div class="k-label">Doctoralia (€)</div>
-    <div class="k-value" data-ref="rentKpiDoctoralia">-318,48 €</div>
-  </div>
-  <div class="mbs-kpi" style="cursor:pointer">
-    <div class="k-label">Top Doctors (€)</div>
-    <div class="k-value" data-ref="rentKpiTopD">-156,09 €</div>
-  </div>
-  <div class="mbs-kpi" style="cursor:pointer">
-    <div class="k-label">Recepción (€)</div>
-    <div class="k-value" data-ref="rentKpiRecepcion">-1.500,00 €</div>
-  </div>
-</div>
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Beneficio neto por especialista</h5>
+            <span class="mbs-chartnote" data-chart-summary="beneficio"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones beneficio por especialista">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="beneficio" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="beneficio" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartBeneficio" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="chart-area">
+          <canvas data-ref="chartBeneficio"></canvas>
+        </div>
+      </div>
 
-    <div class="mbs-tablewrap">
-      <table class="mbs-table" aria-label="Análisis de rentabilidad por especialista">
-        <thead>
-          <tr>
-            <th>Especialista</th>
-            <th>Facturado (€)</th>
-            <th>Sueldos (€)</th>
-            <th>TopD Doct (€)</th>
-            <th>SEM (€)</th>
-            <th>Recepción (€)</th>
-            <th>Beneficio (€)</th>
-            <th>Margen (%)</th>
-          </tr>
-        </thead>
-        <tbody data-ref="rentBody"></tbody>
-        <tfoot class="mbs-foot">
-          <tr>
-            <td>TOTAL</td>
-            <td data-ref="rentTotFacturado">0,00</td>
-            <td data-ref="rentTotCostes">0,00</td>
-            <td data-ref="rentTotTopD">0,00</td>
-            <td data-ref="rentTotSem">0,00</td>
-            <td data-ref="rentTotRecepcion">0,00</td>
-            <td data-ref="rentTotBeneficio">0,00</td>
-            <td data-ref="rentTotMargen">0%</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Margen (%) por especialista</h5>
+            <span class="mbs-chartnote" data-chart-summary="margen"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones margen por especialista">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="margen" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="margen" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartMargen" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="chart-area">
+          <canvas data-ref="chartMargen"></canvas>
+        </div>
+      </div>
 
-    <!-- Gráfico de distribución de gastos -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Distribución de gastos</h5>
-          <span class="mbs-chartnote" data-chart-summary="gastos"></span>
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Beneficio total por especialidad</h5>
+            <span class="mbs-chartnote" data-chart-summary="beneficioEsp"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones beneficio por especialidad">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="beneficioEsp" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="beneficioEsp" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartBeneficioEspecialidad" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
         </div>
-        <div class="mbs-chartactions" aria-label="Opciones distribución de gastos">
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartGastos" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="chart-area">
-        <canvas data-ref="chartGastos"></canvas>
-      </div>
-    </div>
-    <!-- Gráfico de beneficio neto por especialista -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Beneficio neto por especialista</h5>
-          <span class="mbs-chartnote" data-chart-summary="beneficio"></span>
-        </div>
-        <div class="mbs-chartactions" aria-label="Opciones beneficio por especialista">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="beneficio" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="beneficio" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartBeneficio" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
+        <div class="chart-area">
+          <canvas data-ref="chartBeneficioEspecialidad"></canvas>
         </div>
       </div>
-      <div class="chart-area">
-        <canvas data-ref="chartBeneficio"></canvas>
-      </div>
-    </div>
 
-    <!-- Gráfico de margen por especialista -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Margen (%) por especialista</h5>
-          <span class="mbs-chartnote" data-chart-summary="margen"></span>
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Margen (%) por especialidad</h5>
+            <span class="mbs-chartnote" data-chart-summary="margenEsp"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones margen por especialidad">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="margenEsp" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="margenEsp" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartMargenEspecialidad" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
         </div>
-        <div class="mbs-chartactions" aria-label="Opciones margen por especialista">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="margen" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="margen" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartMargen" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
+        <div class="chart-area">
+          <canvas data-ref="chartMargenEspecialidad"></canvas>
         </div>
       </div>
-      <div class="chart-area">
-        <canvas data-ref="chartMargen"></canvas>
-      </div>
-    </div>
 
-    <!-- Gráfico de beneficio total por especialidad -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Beneficio total por especialidad</h5>
-          <span class="mbs-chartnote" data-chart-summary="beneficioEsp"></span>
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Análisis por especialista (Facturación vs Costes vs Beneficio)</h5>
+            <span class="mbs-chartnote" data-chart-summary="stacked"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones stacked por especialista">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="stacked" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="stacked" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartStacked" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
         </div>
-        <div class="mbs-chartactions" aria-label="Opciones beneficio por especialidad">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="beneficioEsp" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="beneficioEsp" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartBeneficioEspecialidad" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
+        <div class="chart-area">
+          <canvas data-ref="chartStacked"></canvas>
         </div>
       </div>
-      <div class="chart-area">
-        <canvas data-ref="chartBeneficioEspecialidad"></canvas>
-      </div>
-    </div>
 
-    <!-- Gráfico de margen por especialidad -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Margen (%) por especialidad</h5>
-          <span class="mbs-chartnote" data-chart-summary="margenEsp"></span>
+      <div class="mbs-chartwrap" style="margin-top:1rem">
+        <div class="mbs-charthead">
+          <div class="mbs-charttitle">
+            <h5>Análisis por especialidad (Facturación vs Costes vs Beneficio)</h5>
+            <span class="mbs-chartnote" data-chart-summary="stackedEsp"></span>
+          </div>
+          <div class="mbs-chartactions" aria-label="Opciones stacked por especialidad">
+            <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="stackedEsp" data-mode="top">Top 8</button>
+            <button type="button" class="mbs-chartbtn" data-chart-toggle="stackedEsp" data-mode="all">Todo</button>
+            <button type="button" class="mbs-chartbtn" data-chart-download="chartStackedEspecialidad" data-variant="ghost">
+              <span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
+                PNG
+              </span>
+            </button>
+          </div>
         </div>
-        <div class="mbs-chartactions" aria-label="Opciones margen por especialidad">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="margenEsp" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="margenEsp" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartMargenEspecialidad" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
+        <div class="chart-area">
+          <canvas data-ref="chartStackedEspecialidad"></canvas>
         </div>
-      </div>
-      <div class="chart-area">
-        <canvas data-ref="chartMargenEspecialidad"></canvas>
-      </div>
-    </div>
-
-    <!-- Stacked Bar Chart: Facturación vs Costes vs Beneficio -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Análisis por especialista (Facturación vs Costes vs Beneficio)</h5>
-          <span class="mbs-chartnote" data-chart-summary="stacked"></span>
-        </div>
-        <div class="mbs-chartactions" aria-label="Opciones stacked por especialista">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="stacked" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="stacked" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartStacked" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="chart-area">
-        <canvas data-ref="chartStacked"></canvas>
-      </div>
-    </div>
-    <!-- Stacked Bar Chart por especialidad -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Análisis por especialidad (Facturación vs Costes vs Beneficio)</h5>
-          <span class="mbs-chartnote" data-chart-summary="stackedEsp"></span>
-        </div>
-        <div class="mbs-chartactions" aria-label="Opciones stacked por especialidad">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="stackedEsp" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="stackedEsp" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartStackedEspecialidad" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="chart-area">
-        <canvas data-ref="chartStackedEspecialidad"></canvas>
-      </div>
-    </div>
-
-    <!-- Chart de gastos por especialista -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Gastos por especialista</h5>
-          <span class="mbs-chartnote" data-chart-summary="gastosEsp"></span>
-        </div>
-        <div class="mbs-chartactions" aria-label="Opciones gastos por especialista">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="gastosEsp" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="gastosEsp" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartGastosEspecialista" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="chart-area">
-        <canvas data-ref="chartGastosEspecialista"></canvas>
-      </div>
-    </div>
-
-    <!-- Chart de gastos por especialidad -->
-    <div class="mbs-chartwrap" style="margin-top:1rem">
-      <div class="mbs-charthead">
-        <div class="mbs-charttitle">
-          <h5>Gastos por especialidad</h5>
-          <span class="mbs-chartnote" data-chart-summary="gastosEspecialidad"></span>
-        </div>
-        <div class="mbs-chartactions" aria-label="Opciones gastos por especialidad">
-          <button type="button" class="mbs-chartbtn is-active" data-chart-toggle="gastosEspecialidad" data-mode="top">Top 8</button>
-          <button type="button" class="mbs-chartbtn" data-chart-toggle="gastosEspecialidad" data-mode="all">Todo</button>
-          <button type="button" class="mbs-chartbtn" data-chart-download="chartGastosEspecialidad" data-variant="ghost">
-            <span>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20h12"></path><path d="M12 4v12"></path><path d="M8 12l4 4 4-4"></path></svg>
-              PNG
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="chart-area">
-        <canvas data-ref="chartGastosEspecialidad"></canvas>
       </div>
     </div>
   </div>
   <!-- ============== FIN Análisis de Rentabilidad ============== -->
+
 </div>
 
 <!-- CDNs requeridos (carga por orden). -->
@@ -2222,13 +2283,53 @@ body{
   let evolutionPanelInitialized = false;
 
   function initWidget(root){
-    const $ = (name)=>root.querySelector(`[data-ref="${name}"]`);
+    const $ = (name)=>{
+      if (!name) return null;
+      return root.querySelector(`[data-ref="${name}"]`) || document.querySelector(`[data-ref="${name}"]`);
+    };
 
     const glanceTargets = {
       liquidez: Array.from(document.querySelectorAll('[data-mbs-glance="liquidez"]')),
       margen: Array.from(document.querySelectorAll('[data-mbs-glance="margen"]')),
       ocupacion: Array.from(document.querySelectorAll('[data-mbs-glance="ocupacion"]'))
     };
+
+    const FINANCE_VIEW_KEY = 'mbs-finance-subview';
+    const financeTabs = Array.from(root.querySelectorAll('[data-finance-tab]'));
+    const financePanels = Array.from(root.querySelectorAll('[data-finance-panel]'));
+
+    const setFinanceView = (target)=>{
+      financeTabs.forEach((tab)=>{
+        const isActive = tab.dataset.financeTab === target;
+        tab.classList.toggle('is-active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      financePanels.forEach((panel)=>{
+        const isActive = panel.dataset.financePanel === target;
+        panel.classList.toggle('is-active', isActive);
+        panel.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      });
+    };
+
+    if (financeTabs.length && financePanels.length){
+      let preferredView = null;
+      try {
+        preferredView = window.localStorage.getItem(FINANCE_VIEW_KEY);
+      } catch(_){ preferredView = null; }
+      const initialView = financeTabs.some((btn)=>btn.dataset.financeTab === preferredView)
+        ? preferredView
+        : financeTabs[0].dataset.financeTab;
+      setFinanceView(initialView);
+      financeTabs.forEach((tab)=>{
+        tab.addEventListener('click', ()=>{
+          const target = tab.dataset.financeTab;
+          setFinanceView(target);
+          try {
+            window.localStorage.setItem(FINANCE_VIEW_KEY, target);
+          } catch(_){ }
+        });
+      });
+    }
 
     const updateGlance = (key, value) => {
       const targets = glanceTargets[key] || [];
@@ -3670,6 +3771,9 @@ function renderBonosTable(){
     }
 
     function buildNutriPayouts(){
+      if (!nutriBody || !nutriTotBase || !nutriTotGross || !nutriTotRet || !nutriTotNet || !nutriTotCenter || !nutriSumNet || !nutriSumRet){
+        return;
+      }
       const {rows, totals} = computeNutriRows();
       nutriBody.innerHTML='';
 
@@ -3809,6 +3913,9 @@ function renderBonosTable(){
     }
 
     function buildLogoPayouts(){
+      if (!logoBody || !logoTotBase || !logoTotGross || !logoTotRet || !logoTotNet || !logoTotCenter || !logoSumNet || !logoSumRet){
+        return;
+      }
       const {rows, totals} = computeLogoRows();
       logoBody.innerHTML='';
 
@@ -9003,14 +9110,16 @@ function renderCalendarHeatmap(container, year, monthIndex, dailyValues, monthLa
     /* Nutri events */
     loadNutriCfg();
     nutriRet && nutriRet.addEventListener('input', ()=>{ saveNutriCfg(); buildNutriPayouts(); });
-    nutriBody.addEventListener('input', (e)=>{
-      const t=e.target;
-      if (t && t.matches('input[data-nutri]')){
-        const key=t.getAttribute('data-nutri');
-        const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
-        t.value = v; nutriPctMap[key]=v; saveNutriCfg(); buildNutriPayouts();
-      }
-    });
+    if (nutriBody){
+      nutriBody.addEventListener('input', (e)=>{
+        const t=e.target;
+        if (t && t.matches('input[data-nutri]')){
+          const key=t.getAttribute('data-nutri');
+          const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
+          t.value = v; nutriPctMap[key]=v; saveNutriCfg(); buildNutriPayouts();
+        }
+      });
+    }
     nutriCSV && nutriCSV.addEventListener('click', ()=>{
       if (nutriCSV.disabled) return;
       const {rows} = computeNutriRows();
@@ -9052,19 +9161,21 @@ function renderCalendarHeatmap(container, year, monthIndex, dailyValues, monthLa
     /* Logopedas events */
     loadLogoCfg();
     logoRet && logoRet.addEventListener('input', ()=>{ saveLogoCfg(); buildLogoPayouts(); });
-    logoBody.addEventListener('input', (e)=>{
-      const t=e.target;
-      if (!t) return;
-      if (t.matches('input[data-logo]')){
-        const key=t.getAttribute('data-logo');
-        const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
-        t.value = v; logoPctMap[key]=v; saveLogoCfg(); buildLogoPayouts();
-      } else if (t.matches('input[data-logo-ret]')){
-        const key=t.getAttribute('data-logo-ret');
-        const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
-        t.value = v; logoRetMap[key]=v; saveLogoCfg(); buildLogoPayouts();
-      }
-    });
+    if (logoBody){
+      logoBody.addEventListener('input', (e)=>{
+        const t=e.target;
+        if (!t) return;
+        if (t.matches('input[data-logo]')){
+          const key=t.getAttribute('data-logo');
+          const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
+          t.value = v; logoPctMap[key]=v; saveLogoCfg(); buildLogoPayouts();
+        } else if (t.matches('input[data-logo-ret]')){
+          const key=t.getAttribute('data-logo-ret');
+          const v=Math.max(0,Math.min(100, parseFloat(t.value)||0));
+          t.value = v; logoRetMap[key]=v; saveLogoCfg(); buildLogoPayouts();
+        }
+      });
+    }
     logoCSV && logoCSV.addEventListener('click', ()=>{
       if (logoCSV.disabled) return;
       const {rows} = computeLogoRows();
@@ -9785,6 +9896,8 @@ resultsBody.addEventListener('input', (e)=>{
     font-weight:600;
   }
   .mbs-variables-widget .mbs-tiny{font-size:.75rem; color:var(--muted); margin-top:.25rem}
+
+
   .mbs-variables-widget .mbs-pill{
     display:inline-block;
     padding:.2rem .5rem;
@@ -9845,8 +9958,148 @@ resultsBody.addEventListener('input', (e)=>{
     .mbs-variables-widget .mbs-config-grid{grid-template-columns:1fr}
     .mbs-variables-widget .mbs-payroll-v2-highlight{grid-template-columns:1fr;}
   }
+
+  /* ---------- Dark theme overrides ---------- */
+  .mbs-variables-widget{
+    --fg:#e7efff;
+    --muted:rgba(196,208,235,.78);
+    --surface:rgba(9,16,32,.82);
+    --surface-2:rgba(13,22,40,.7);
+    --surface-3:rgba(15,25,44,.62);
+    --border:rgba(148,163,184,.32);
+    --shadow-1:0 32px 64px rgba(8,15,35,.42);
+    --shadow-2:0 28px 64px rgba(var(--mbs-electric-blue-rgb),.22);
+    background:linear-gradient(150deg, rgba(var(--mbs-night-rgb),.92) 0%, rgba(17,28,52,.76) 60%, rgba(12,21,40,.74) 100%);
+    border:1px solid rgba(148,163,184,.32);
+    box-shadow:0 42px 90px rgba(8,15,35,.55);
+    color:var(--fg);
+  }
+  .mbs-variables-widget .mbs-widget-eyebrow{color:rgba(226,234,255,.62);}
+  .mbs-variables-widget .mbs-widget-title h3{color:#f8fbff;}
+  .mbs-variables-widget .mbs-widget-subtitle{color:rgba(216,226,255,.72);}
+  .mbs-variables-widget .mbs-h3 svg{color:var(--mbs-electric-blue);}
+  .mbs-variables-widget .mbs-h4{color:#e8f0ff;}
+  .mbs-variables-widget .mbs-help{color:rgba(210,222,248,.75);}
+  .mbs-variables-widget .mbs-toolbar{
+    background:linear-gradient(180deg,rgba(12,20,38,.9) 0%,rgba(9,16,32,.78) 100%);
+    border:1px solid rgba(148,163,184,.28);
+    box-shadow:0 26px 60px rgba(7,14,30,.55);
+  }
+  .mbs-variables-widget .mbs-chip{
+    border:1px solid rgba(120,162,255,.4);
+    background:linear-gradient(180deg,rgba(34,100,255,.26) 0%,rgba(14,40,82,.62) 100%);
+    color:#e8f0ff;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+  }
+  .mbs-variables-widget .mbs-input,
+  .mbs-variables-widget .mbs-select,
+  .mbs-variables-widget textarea{
+    background:rgba(12,20,36,.85);
+    color:var(--fg);
+    border:1px solid rgba(148,163,184,.35);
+  }
+  .mbs-variables-widget .mbs-input:focus,
+  .mbs-variables-widget .mbs-select:focus,
+  .mbs-variables-widget textarea:focus{
+    border-color:rgba(var(--mbs-electric-blue-rgb),.65);
+    box-shadow:0 0 0 3px rgba(var(--mbs-electric-blue-rgb),.28);
+  }
+  .mbs-variables-widget input[type="checkbox"]{accent-color:var(--mbs-electric-blue);}
+  .mbs-variables-widget .mbs-btn{
+    border-color:rgba(148,163,184,.32);
+    background:linear-gradient(180deg,rgba(21,35,60,.95) 0%,rgba(11,19,35,.88) 100%);
+    color:#f4f8ff;
+    box-shadow:0 18px 36px rgba(5,12,28,.6);
+  }
+  .mbs-variables-widget .mbs-btn:hover{
+    border-color:rgba(var(--mbs-electric-blue-rgb),.45);
+    box-shadow:0 20px 44px rgba(var(--mbs-electric-blue-rgb),.35);
+  }
+  .mbs-variables-widget .mbs-btn.primary{
+    background:linear-gradient(180deg,var(--mbs-electric-blue) 0%,var(--mbs-electric-blue-dark) 100%);
+    border-color:rgba(var(--mbs-electric-blue-rgb),.55);
+    box-shadow:0 26px 52px rgba(var(--mbs-electric-blue-rgb),.45);
+  }
+  .mbs-variables-widget .mbs-kpi{
+    background:rgba(12,22,40,.82);
+    border:1px solid rgba(148,163,184,.28);
+    box-shadow:0 24px 52px rgba(5,12,28,.58);
+  }
+  .mbs-variables-widget .mbs-kpi .k-label{color:rgba(212,222,244,.78);}
+  .mbs-variables-widget .mbs-kpi .k-value{color:#fff;}
+  .mbs-variables-widget .mbs-tablewrap{
+    border:1px solid rgba(120,140,184,.32);
+    background:rgba(10,18,34,.82);
+    box-shadow:0 24px 56px rgba(6,12,26,.55);
+  }
+  .mbs-variables-widget .mbs-table th{
+    background:linear-gradient(180deg,rgba(34,100,255,.22) 0%,rgba(10,20,36,.9) 100%);
+    color:#e9f0ff;
+    border-bottom:1px solid rgba(83,109,157,.45);
+  }
+  .mbs-variables-widget .mbs-table td{
+    background:rgba(8,14,28,.78);
+    color:#f1f5ff;
+    border-bottom:1px solid rgba(46,64,102,.45);
+  }
+  .mbs-variables-widget .mbs-table tbody tr:nth-child(even){background:rgba(9,16,32,.72);}
+  .mbs-variables-widget .mbs-table tbody tr:hover{background:rgba(24,42,78,.65);}
+  .mbs-variables-widget .mbs-table tfoot{
+    background:rgba(17,28,52,.78);
+    border-top:1px solid rgba(83,109,157,.6);
+  }
+  .mbs-variables-widget .mbs-table tfoot td{color:#f1f6ff;}
+  .mbs-variables-widget .mbs-card,
+  .mbs-variables-widget .mbs-payroll-block,
+  .mbs-variables-widget .mbs-payroll-summary,
+  .mbs-variables-widget .mbs-config,
+  .mbs-variables-widget .mbs-payroll-v2,
+  .mbs-variables-widget .mbs-payroll-v2-highlight-card{
+    background:rgba(11,20,36,.82);
+    border:1px solid rgba(120,140,184,.32);
+    color:var(--fg);
+    box-shadow:0 26px 60px rgba(6,12,26,.55);
+  }
+  .mbs-variables-widget .mbs-payroll-summary{
+    background:rgba(9,18,34,.82);
+    border:1px solid rgba(83,109,157,.4);
+  }
+  .mbs-variables-widget .mbs-payroll-table th{
+    background:linear-gradient(180deg,rgba(34,100,255,.22) 0%,rgba(10,20,36,.9) 100%);
+    color:#e9f0ff;
+    border-bottom:1px solid rgba(83,109,157,.4);
+  }
+  .mbs-variables-widget .mbs-payroll-table td{
+    background:rgba(8,14,28,.78);
+    color:#f1f5ff;
+    border-bottom:1px solid rgba(46,64,102,.45);
+  }
+  .mbs-variables-widget .mbs-payroll-table tr:nth-child(even) td{background:rgba(9,16,32,.72);}
+  .mbs-variables-widget .mbs-payroll-table th:first-child,
+  .mbs-variables-widget .mbs-payroll-table td:first-child{color:#f4f7ff;}
+  .mbs-variables-widget .mbs-payroll-v2-highlight-card .label{color:rgba(199,210,233,.75);}
+  .mbs-variables-widget .mbs-payroll-v2-highlight-card .value{color:#f8fbff;}
+  .mbs-variables-widget .mbs-payroll-v2-highlight-card .hint{color:rgba(208,219,243,.72);}
+  .mbs-variables-widget .mbs-payroll-v2-highlight-card.mbs-payroll-v2-highlight-muted{
+    background:rgba(12,20,36,.6);
+    opacity:.85;
+  }
+  .mbs-variables-widget .mbs-payroll-v2-summary-row span:first-child{color:rgba(207,219,244,.75);}
+  .mbs-variables-widget .mbs-payroll-v2-summary-row span:last-child{color:#f8fbff;}
+  .mbs-variables-widget .mbs-payroll-v2-note{color:rgba(198,208,234,.65);}
+  .mbs-variables-widget .mbs-payroll-v2-details details{
+    background:rgba(10,18,34,.85);
+    border:1px solid rgba(92,116,162,.36);
+  }
+  .mbs-variables-widget .mbs-payroll-v2-details summary{color:#f4f7ff;}
+  .mbs-variables-widget .mbs-payroll-v2-details td{color:#e8efff;}
+  .mbs-variables-widget .mbs-config{
+    background:rgba(8,16,30,.78);
+    border:1px dashed rgba(120,140,184,.45);
+  }
+
 </style>
-<div class="mbs-variables-widget" data-mbs style="position: relative; z-index: 1; background: #fff; border-radius: 16px; padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+<div class="mbs-variables-widget" data-mbs style="position:relative;z-index:1;">
   <header class="mbs-widget-header">
     <div class="mbs-widget-header-icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
